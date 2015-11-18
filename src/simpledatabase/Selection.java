@@ -7,7 +7,6 @@ public class Selection extends Operator
 	String whereTablePredicate;
 	String whereAttributePredicate;
 	String whereValuePredicate;
-	boolean next = true;
 	
 	public Selection(Operator child, String whereTablePredicate, String whereAttributePredicate, String whereValuePredicate)
 	{
@@ -25,37 +24,38 @@ public class Selection extends Operator
 	@Override
 	public Tuple next()
 	{
-		// ask for a record
-		Tuple t = child.next();
+		// start to ask for a tuple
+		Tuple tupleToBeSelected = child.next();
 		
-		if (child.from.equals(whereTablePredicate))
+		// if the table is the destination table
+		String table = child.from;
+		if (table.equals(whereTablePredicate))
 		{
-			while (t != null)
+			while (tupleToBeSelected != null)
 			{
-				// System.out.println("not null in selection: " + t);
-				attributeList = t.getAttributeList();
+				attributeList = tupleToBeSelected.getAttributeList();
 				
+				// check whether the record fulfills the requirement or not
 				for (int i = 0; i < attributeList.size(); i++)
 				{
-					// System.out.println(attributeList.get(i).getAttributeName()+" vs "+whereAttributePredicate);
 					if (attributeList.get(i).getAttributeName().equals(whereAttributePredicate))
 					{
+						// if the requirement is fulfilled, return the tuple
 						if (attributeList.get(i).getAttributeValue().equals(whereValuePredicate))
 						{
-							System.out.println("return! " + t);
-							return t;
+							return tupleToBeSelected;
 						}
 					}
 				}
 				
-				t = child.next();
+				// continue to ask for tuples until a required tuple is found
+				tupleToBeSelected = child.next();
 			}
-
-			// System.out.println("null in selection: " + t);
+			
 			return null;
 		}
-		else
-			return t;
+		else	// if the table is not the destination table, checking is not needed
+			return tupleToBeSelected;
 	}
 	
 	/**

@@ -22,41 +22,37 @@ public class Sort extends Operator
 	@Override
 	public Tuple next()
 	{
-		Tuple t = child.next();
-		while (t != null)
+		// start to ask for a record
+		Tuple tupleToBeSorted = child.next();
+
+		// collect all the tuples from the table first
+		while (tupleToBeSorted != null)
 		{
-			tuplesResult.add(t);
-			t = child.next();
+			tuplesResult.add(tupleToBeSorted);
+			tupleToBeSorted = child.next();
 		}
 		
-		System.out.println("Result: "+tuplesResult);
-		for (int i = 0; i < tuplesResult.size(); i++)
+		// if the tuple collection is not empty
+		if (!tuplesResult.isEmpty())
 		{
-			t = tuplesResult.get(i);
-			for (int j = 0; j < t.getAttributeList().size(); j++)
-			{
-				System.out.print(t.getAttributeName(j) + " ");
-				System.out.print(t.getAttributeValue(j) + " ");
-			}
-			System.out.println();
-		}
-		
-		if (tuplesResult.size() > 0)
-		{
-			Tuple min = tuplesResult.get(0);
-			Tuple cur;
+			Tuple min = tuplesResult.get(0);	// minimum tuple
+			Tuple cur;							// current tuple
 			newAttributeList = min.getAttributeList();
+			
+			// find out the destination attribute for sorting
 			for (int i = 0; i < newAttributeList.size(); i++)
 			{
 				if (newAttributeList.get(i).getAttributeName().equals(orderPredicate))
 				{
-					for (int tupleCnt = 0; tupleCnt < tuplesResult.size(); tupleCnt++)
+					// find out the minimum tuple
+					for (int tupleCount = 0; tupleCount < tuplesResult.size(); tupleCount++)
 					{
-						cur = tuplesResult.get(tupleCnt);
+						cur = tuplesResult.get(tupleCount);
 						if (min.getAttributeValue(i).toString().compareTo(cur.getAttributeValue(i).toString()) > 0)
 							min = cur;
-						System.out.println(min.getAttributeValue(i));
 					}
+					
+					// remove and return the minimum tuple
 					tuplesResult.remove(min);
 					return min;
 				}

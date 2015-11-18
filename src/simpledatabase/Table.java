@@ -8,7 +8,6 @@ import java.io.InputStreamReader;
 public class Table extends Operator
 {
 	private BufferedReader br = null;
-	private boolean getAttribute = false;
 	private Tuple tuple;
 	String attributeLine, dataTypeLine, tupleLine;
 	
@@ -26,18 +25,24 @@ public class Table extends Operator
 			e.printStackTrace();
 		}
 		
-		// read the attribute line (the 1st line)
-		try {
+		// read the attribute line
+		try
+		{
 			attributeLine = br.readLine();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		// read the data type line (the 2nd line)
-		try {
+		// read the data type line
+		try
+		{
 			dataTypeLine = br.readLine();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -52,9 +57,12 @@ public class Table extends Operator
 	public Tuple next()
 	{
 		// read the next record line
-		try {
+		try
+		{
 			tupleLine = br.readLine();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -62,12 +70,11 @@ public class Table extends Operator
 		// set the attribute list and return the tuple (record)
 		if (tupleLine != null)
 		{
-			Tuple t = new Tuple(attributeLine, dataTypeLine, tupleLine);
-			System.out.println(t+": "+tupleLine);
-			t.setAttributeName();
-			t.setAttributeType();
-			t.setAttributeValue();
-			return t;
+			Tuple newTuple = new Tuple(attributeLine, dataTypeLine, tupleLine);
+			newTuple.setAttributeName();
+			newTuple.setAttributeType();
+			newTuple.setAttributeValue();
+			return newTuple;
 		}
 		else	// if all records are read
 			return null;

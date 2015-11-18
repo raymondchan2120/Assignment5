@@ -4,9 +4,9 @@ import java.util.ArrayList;
 public class Join extends Operator
 {
 	private ArrayList<Attribute> newAttributeList;
-	private ArrayList<Attribute> list;
+	private ArrayList<Attribute> attributeList2;
 	private String joinPredicate;
-	ArrayList<Tuple> tuples1;
+	ArrayList<Tuple> tupleList;
 	
 	// Join Constructor, join fill
 	public Join(Operator leftChild, Operator rightChild, String joinPredicate)
@@ -15,14 +15,14 @@ public class Join extends Operator
 		this.rightChild = rightChild;
 		this.joinPredicate = joinPredicate;
 		newAttributeList = new ArrayList<Attribute>();
-		list = new ArrayList<Attribute>();
-		tuples1 = new ArrayList<Tuple>();
+		attributeList2 = new ArrayList<Attribute>();
+		tupleList = new ArrayList<Tuple>();
 		
 		// collect all the tuples from the left child first
 		Tuple t = leftChild.next();
 		while (t != null)
 		{
-			tuples1.add(t);
+			tupleList.add(t);
 			t = leftChild.next();
 		}
 	}
@@ -35,44 +35,39 @@ public class Join extends Operator
 	@Override
 	public Tuple next()
 	{
-		Tuple t = rightChild.next();
-		if (t != null)
+		// ask for a tuple
+		Tuple tupleToBeJoined = rightChild.next();
+		
+		if (tupleToBeJoined != null)
 		{
-			System.out.println(tuples1);
-			// find out the common attribute
-			newAttributeList = t.getAttributeList();
-			list = tuples1.get(0).getAttributeList();
+			newAttributeList = tupleToBeJoined.getAttributeList();
+			attributeList2 = tupleList.get(0).getAttributeList();
+			
+			// start to find out the common attribute for joining
 			for (int i = 0; i < newAttributeList.size(); i++)
 			{
-				for (int j = 0; j < list.size(); j++)
+				for (int j = 0; j < attributeList2.size(); j++)
 				{
 					// if common attribute is found
-					if (newAttributeList.get(i).getAttributeName().equals(list.get(j).getAttributeName()))
+					if (newAttributeList.get(i).getAttributeName().equals(attributeList2.get(j).getAttributeName()))
 					{
-						System.out.println("common attribute found: "+list.get(j).getAttributeName());
-						for (int tupleCnt = 0; tupleCnt < tuples1.size(); tupleCnt++)
+						// start to find the common value for joining
+						for (int tupleCount = 0; tupleCount < tupleList.size(); tupleCount++)
 						{
 							// if common value is found
-							if (newAttributeList.get(i).getAttributeValue().equals(tuples1.get(tupleCnt).getAttributeValue(j)))
+							if (newAttributeList.get(i).getAttributeValue().equals(tupleList.get(tupleCount).getAttributeValue(j)))
 							{
-								// System.out.println("common value found: "+tuples1.get(tupleCnt).getAttributeValue(j));
-								Attribute check = newAttributeList.get(i);
-								// System.out.println(check.getAttributeName()+" "+check.getAttributeValue());
+								// remove the extra one first
+								Attribute removable = newAttributeList.get(i);
+								newAttributeList.remove(removable);
 								
-								// System.out.println(newAttributeList);
-								newAttributeList.remove(check);
-								// System.out.println(newAttributeList);
-								list = tuples1.get(tupleCnt).getAttributeList();
-								for (int count = 0; count < list.size(); count++)
-									newAttributeList.add(list.get(count));
-								// System.out.println("return the joined one: "+t);
-								/*for (int k = 0; k < t.getAttributeList().size(); k++)
-								{
-									System.out.print(t.getAttributeName(k) + " ");
-									System.out.print(t.getAttributeValue(k) + " ");
-								}
-								System.out.println();*/
-								return t;
+								// join together
+								attributeList2 = tupleList.get(tupleCount).getAttributeList();
+								for (int count = 0; count < attributeList2.size(); count++)
+									newAttributeList.add(attributeList2.get(count));
+								
+								// return the new tuple
+								return tupleToBeJoined;
 							}
 						}
 					}
