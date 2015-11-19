@@ -14,9 +14,9 @@ public class Projection extends Operator
 	}
 	
 	/**
-     * Return the data of the selected attribute as tuple format
-     * @return tuple
-     */
+	 * Return the data of the selected attribute as tuple format.
+	 * @return tuple
+	 */
 	@Override
 	public Tuple next()
 	{
@@ -45,9 +45,9 @@ public class Projection extends Operator
 	}
 	
 	/**
-     * The function is used to get the attribute list of the tuple
-     * @return attribute list
-     */
+	 * The function is used to get the attribute list of the tuple.
+	 * @return attribute list
+	 */
 	public ArrayList<Attribute> getAttributeList()
 	{
 		return child.getAttributeList();

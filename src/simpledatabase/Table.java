@@ -49,10 +49,10 @@ public class Table extends Operator
 	}
 	
 	/**
-     * Create a new tuple and return the tuple to its parent.
-     * Set the attribute list if you have not prepare the attribute list
-     * @return the tuple
-     */
+	 * Create a new tuple and return the tuple to its parent.
+	 * Set the attribute list if you have not prepared the attribute list.
+	 * @return the tuple
+	 */
 	@Override
 	public Tuple next()
 	{
@@ -81,9 +81,9 @@ public class Table extends Operator
 	}
 	
 	/**
-     * The function is used to get the attribute list of the tuple
-     * @return the attribute list
-     */
+	 * The function is used to get the attribute list of the tuple.
+	 * @return the attribute list
+	 */
 	public ArrayList<Attribute> getAttributeList()
 	{
 		return tuple.getAttributeList();

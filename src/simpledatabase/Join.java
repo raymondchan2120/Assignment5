@@ -28,9 +28,9 @@ public class Join extends Operator
 	}
 	
 	/**
-     * It is used to return a new tuple which is already joined by the common attribute
-     * @return the new joined tuple
-     */
+	 * It is used to return a new tuple which is already joined by the common attribute.
+	 * @return the new joined tuple
+	 */
 	// The record after join with two tables
 	@Override
 	public Tuple next()
@@ -78,9 +78,9 @@ public class Join extends Operator
 	}
 	
 	/**
-     * The function is used to get the attribute list of the tuple
-     * @return attribute list
-     */
+	 * The function is used to get the attribute list of the tuple.
+	 * @return attribute list
+	 */
 	public ArrayList<Attribute> getAttributeList()
 	{
 		if (joinPredicate.isEmpty())

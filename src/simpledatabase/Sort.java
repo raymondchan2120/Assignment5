@@ -16,9 +16,9 @@ public class Sort extends Operator
 	}
 	
 	/**
-     * The function is used to return the sorted tuple
-     * @return tuple
-     */
+	 * The function is used to return the sorted tuple.
+	 * @return tuple
+	 */
 	@Override
 	public Tuple next()
 	{
@@ -63,9 +63,9 @@ public class Sort extends Operator
 	}
 	
 	/**
-     * The function is used to get the attribute list of the tuple
-     * @return attribute list
-     */
+	 * The function is used to get the attribute list of the tuple.
+	 * @return attribute list
+	 */
 	public ArrayList<Attribute> getAttributeList()
 	{
 		return child.getAttributeList();

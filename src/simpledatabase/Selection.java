@@ -18,9 +18,9 @@ public class Selection extends Operator
 	}
 	
 	/**
-     * Get the tuple which match to the where condition
-     * @return the tuple
-     */
+	 * Get the tuple which matches to the where condition.
+	 * @return the tuple
+	 */
 	@Override
 	public Tuple next()
 	{
@@ -59,9 +59,9 @@ public class Selection extends Operator
 	}
 	
 	/**
-     * The function is used to get the attribute list of the tuple
-     * @return the attribute list
-     */
+	 * The function is used to get the attribute list of the tuple.
+	 * @return the attribute list
+	 */
 	public ArrayList<Attribute> getAttributeList()
 	{
 		return(child.getAttributeList());
