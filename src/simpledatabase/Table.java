@@ -9,8 +9,10 @@ public class Table extends Operator
 {
 	private BufferedReader br = null;
 	private Tuple tuple;
+	private boolean getAttribute = false;
 	String attributeLine, dataTypeLine, tupleLine;
 	
+	// Table constructor
 	public Table(String from)
 	{
 		this.from = from;
@@ -20,30 +22,8 @@ public class Table extends Operator
 		{
 			br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/datafile/"+from+".csv")));
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
-			e.printStackTrace();
-		}
-		
-		// read the attribute line
-		try
-		{
-			attributeLine = br.readLine();
-		}
-		catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		// read the data type line
-		try
-		{
-			dataTypeLine = br.readLine();
-		}
-		catch (IOException e)
-		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -56,6 +36,31 @@ public class Table extends Operator
 	@Override
 	public Tuple next()
 	{
+		// read the attribute line and the data type line first
+		if (getAttribute == false)
+		{
+			try
+			{
+				attributeLine = br.readLine();
+			}
+			catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			try
+			{
+				dataTypeLine = br.readLine();
+			}
+			catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		getAttribute = true;
+		
 		// read the next record line
 		try
 		{

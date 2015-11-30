@@ -8,6 +8,7 @@ public class Selection extends Operator
 	String whereAttributePredicate;
 	String whereValuePredicate;
 	
+	// Selection constructor
 	public Selection(Operator child, String whereTablePredicate, String whereAttributePredicate, String whereValuePredicate)
 	{
 		this.child = child;

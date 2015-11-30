@@ -6,6 +6,7 @@ public class Projection extends Operator
 	ArrayList<Attribute> newAttributeList;
 	private String attributePredicate;
 	
+	// Projection constructor
 	public Projection(Operator child, String attributePredicate)
 	{
 		this.attributePredicate = attributePredicate;

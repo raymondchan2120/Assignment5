@@ -7,6 +7,7 @@ public class Sort extends Operator
 	private String orderPredicate;
 	ArrayList<Tuple> tuplesResult;
 	
+	// Sort constructor
 	public Sort(Operator child, String orderPredicate)
 	{
 		this.child = child;
